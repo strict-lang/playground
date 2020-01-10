@@ -1,0 +1,20 @@
+class BubbleSort<Element is Compared> is Sort<Element>
+  MutableList<Element> elements
+
+method Element[] Sort()
+  return elements.ToImmutableList()
+
+method compute() 
+  Int lastIndex = elements.LastIndex()
+  for rightIndex from 0 to lastIndex 
+    for leftIndex from 0 to lastIndex - rightIndex
+      maybeSwap(leftIndex)
+
+method maybeSwap(Int index)
+  if shouldSwapAt(index) 
+    elements.Swap(index, index + 1)
+
+method shouldSwapAt(Int index)
+  Element current = elements[index]
+  Element next = elements[index + 1]
+  return current.CompareTo(next)  

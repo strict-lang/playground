@@ -1,0 +1,20 @@
+class QuickSort<Element is Comparable>
+  class keyValuePair(String key, String value)
+
+//not needed: factory(Elements[] elements)
+Element[] elements
+
+method (String key, String value) GetBla()
+  return ("blub", "bla")
+
+method UseBla(String key, String value)
+  ...
+
+method Element[] Sort()
+  test
+    with Empty
+      assert Sort() is Empty
+    with [6, 4, 7]
+      assert Sort() is [4, 6, 7]
+  ...
+  return elements

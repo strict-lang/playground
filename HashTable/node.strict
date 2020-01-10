@@ -1,0 +1,4 @@
+class node<Key is Unique, Value is Anything>
+  Key key
+  Value value
+  node<Key, Value>? next

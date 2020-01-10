@@ -1,0 +1,60 @@
+class HashTable<Key is Immutable, Value is Anything> is Table<Key, Value>
+  MutableArray<bucket<Key, Value>> buckets
+  
+const DefaultBucketCount = 16
+
+create()
+  create(DefaultBucketCount)
+
+create(Number bucketCount)
+  buckets = MutableArray.Populate(bucketCount, {
+    return bucket<key, value>()
+  })
+  
+method Insert(Key key, Value value)
+  test with HashTable<FixedHash, Number>()
+    Insert(FixedHash(1), 10)
+    assert Find(FixedHash(1)) is 10
+    Insert(FixedHash(1), 20)
+    assert Find(FixedHash(1)) is 20
+    Insert(FixedHash(2), 10)
+    assert Find(FixedHash(1)) is 10
+  bucket<Key, Value> bucket = selectBucketForKey(key)
+  bucket.Insert(key, value)
+    
+method Value? Find(Key key)    
+  test with HashTable<FixedHash, Number>()
+    Insert(FixedHash(1), 10)
+    Insert(FixedHash(2), 20)
+    assert Find(FixedHash(1)) is 10
+    assert Find(FixedHash(2)) is 20
+    assert Find(FixedHash(3)) is None
+  bucket<Key, Value> bucket = selectBucketForKey(key)
+  return bucket.Find(key)
+  
+method Boolean Contains(Key key)
+  test with HashTable<FixedHash, Number>()
+    Insert(FixedHash(1), 10)
+    Insert(FixedHash(2), 20)
+    assert Contains(FixedHash(1))
+    assert Contains(FixedHash(2))
+    assert not Contains(FixedHash(0))
+  return Find(key) exists
+  
+method bucket<Key, Value> selectBucketForKey(Key key)
+  test
+    bucket<FixedHahs, Anything> first = bucket()
+    buckets = [first, bucket(), bucket()]
+    assert selectBucketForKey(FixedHash(0)) is first
+    assert selectBucketForKey(FixedHash(1)) isnt first
+  Number index = selectBucketIndexForKey(key)
+  return buckets[index]
+    
+method Number selectBucketIndexForKey(Key key)
+  test
+    with [bucket(), bucket(), bucket()]
+      assert selectBucketIndexForKey(FixedHash(10)) is 1
+      assert selectBucketIndexForKey(FixedHash(-1)) is 2
+      assert selectBucketIndexForKey(FixedHash(0)) is 0
+      assert selectBucketIndexForKey(FixedHash(3)) is 2
+  return key.CalculateHash() % buckets.Count()

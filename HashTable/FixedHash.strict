@@ -1,0 +1,6 @@
+Number hash
+
+method Number CalculateHash()
+  test
+    assert CalculateHash() is hash
+  return hash

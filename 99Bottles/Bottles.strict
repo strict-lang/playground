@@ -1,0 +1,15 @@
+import Strict.App
+
+is App
+Log log
+
+method Run()
+  Test with MockLog
+    Run()
+    assert String(log) startsWith "99 Bottles on the wall"
+  for numberOfBottles from 99 to 0
+    log.WriteLine(numberOfBottles + " of beer on the wall, " + numberOfBottles + "bottles of beer")
+    if numberOfBottles > 1
+      log.WriteLine("Take one down, pass it round " + numberOfBottles + " bottles of beer")
+    else
+      log.WriteLine("No more bottles of beer")

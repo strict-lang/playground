@@ -1,0 +1,32 @@
+//generic Element is Lerp
+//basedon Lerp
+//means: class StringCalculator<Element is Lerp> : Lerp
+import Strict.App
+basedon App
+
+method Run(Options arguments)
+  text = String(arguments)
+  log.WriteLine("Add returns: " + Add())
+
+String text = "4,2"
+
+method Number Add()
+  test with ("1,2")
+    assert Add() is 3
+
+  // Procedual way Abdul
+  Number result = 0
+  for part in text.Split(",")
+    result = result + Number(part)
+  return result
+
+  // Reduce way Merlin
+  return stream text.Split(",") as part
+    map { Number(part) as number }
+    reduce 0, { value => value + _ }
+
+  // Reduce way Benjamin
+  return text.Split(",").
+    Map({ value=>Number(value) }).
+    //easy way: Sum()
+    Reduce(0, { current, next => current + next })

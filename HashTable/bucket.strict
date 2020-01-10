@@ -1,0 +1,26 @@
+class bucket<Key is Unique, Value is Anything>
+  node<Key, Value> head
+  
+method Insert(Key key, Value value)
+  node<Key, Value> entry = node(key, value)
+  node<Key, Value> currentTail = findTail(head)
+  currentTail.next = entry
+  
+method Value> Find(Key key)
+  node<Key, Value>? found = seek(key)
+  return found.?value or None 
+  
+method node<Key, Value>? seek(Key key)
+  return seekRecursive(head, key)
+
+method node<Key, Value>? seekRecursive(node<key, value> current, Key key)
+  if current.key is key
+    return current
+  if current.next exists
+    return seekRecursive(current.next, key)
+  return None
+  
+method node<Key, value> findTail(node<Key, Value> current)
+  if current.next exists
+    return findTail(current.next)
+  return current

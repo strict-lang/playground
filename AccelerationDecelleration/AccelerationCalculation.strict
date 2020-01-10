@@ -1,0 +1,18 @@
+import Strict.Math
+
+factory(Float distance, Float accelerationTime)
+
+Float distance
+Float accelerationTime
+
+method Float Calculate(Float x)
+  test with (10, 1)
+    assert Calculate(0) is 0
+    assert Calculate(10) is 0
+    assert Calculate(5) is 1
+    assert Calculate(0.5) is 0.5
+    assert Calculate(9.5) is 0.5
+  return match
+    when x < accelerationTime => x / accelerationTime
+    when x > distance - accelerationTime => (distance - x) / accelerationTime 
+    else => 1
