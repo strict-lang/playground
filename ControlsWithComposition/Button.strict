@@ -1,0 +1,7 @@
+import OpenGL
+implement Control
+control
+graphics
+
+method Draw()
+  graphics.Draw(Box(Position, Size, Color))
